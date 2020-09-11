@@ -86,7 +86,7 @@ def save_album(a_data):
     albums = session.query(Album).all()
     for album in albums:
         if album == a_data:
-            result = HTTPError(404, message)
+            return False
     session.add(a_data)
     session.commit()
     return True
@@ -127,6 +127,10 @@ def get_data():
 
     if save_album(album_data):
         return "Данные успешно сохранены"
+    else:
+        message = "Такой альбом уже в базе есть!"
+        result = HTTPError(404, message)
+        return result
     
 
 if __name__ == "__main__":
